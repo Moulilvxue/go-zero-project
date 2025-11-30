@@ -1,0 +1,62 @@
+syntax = "v1"
+
+
+import "basicModel.api"
+
+info(
+    title: "电商应用用户API相关数据模型"
+    description: "包含用户信息数据模型定义"
+    version: "v1.0.0"
+)
+
+
+type (
+    // ------------用户注册------------
+    UserRegisterReq{
+        Username string `json:"username"` // 用户名
+        Password string `json:"password"` // 密码
+        Phone    string `json:"phone"`    // 手机号
+    }
+
+    UserRegisterResp{
+        Success     bool   `json:"success"`       // 注册成功标志
+        UserID      int64  `json:"user_id"`  // 新注册用户的ID
+        AccessToken string `json:"access_token"` // 注册成功后返回的访问令牌
+        AccessExpire int64 `json:"access_expire"` // 访问令牌过期时间，单位秒
+    }
+
+    // ------------用户登录------------
+    UserLoginReq{
+        Username string `json:"username"` // 用户名
+        Password string `json:"password"` // 密码
+    }
+
+    UserLoginResp{
+        AccessToken string `json:"access_token"` // 登录成功后返回的JWT令牌
+        AccessExpire int64 `json:"access_expire"` // 访问令牌过期时间，单位秒
+        UserID int64 `json:"user_id"` // 登录成功的用户ID
+        Nickname string `json:"nickname"` // 用户昵称
+    }
+
+    // ------------获取用户信息------------
+    UserInfoResp{
+        UserInfo User `json:"user_info"` // 用户信息
+    }
+
+    // ------------更新用户信息------------
+    UserUpdateReq{
+        UserID   int64  `json:"user_id"`   // 用户ID
+        Username string `json:"username"` // 用户名
+        Avatar   Image  `json:"avatar"`   // 用户头像
+        Phone    string `json:"phone"`    // 手机号
+    }
+
+    UserUpdateResp{
+        Success bool `json:"success"` // 是否更新成功
+    }
+
+    // ------------用户注销------------
+    UserLogoutResp{
+        Success bool `json:"success"` // 是否注销成功
+    }
+)

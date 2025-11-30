@@ -1,0 +1,2 @@
+{"@timestamp":"2025-11-29T17:37:53.532+08:00","caller":"sqlx/utils.go:142","content":"Error on getting sql instance of tcp(127.0.0.1:3306)/product?parseTime=true: Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)","level":"error","span":"5a7cd7e90e31d3ef","trace":"7a89454b57ecdc0bc243b4f986430c18"}
+{"@timestamp":"2025-11-29T17:37:53.532+08:00","caller":"logic/productlogic.go:38","content":"Product find one error:Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)","level":"error"}

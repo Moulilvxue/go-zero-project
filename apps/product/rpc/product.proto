@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package product;
+option go_package = "./product";
+
+service Product {
+  rpc Product(ProductItemRequest) returns (ProductItem) ;
+  rpc ProductsByIds(ProductsRequest) returns(ProductsResponse);
+  rpc ProductsByCategory(ProductsByCategoryRequest) returns(ProductsByCategoryResponse);
+  rpc UpdateProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
+  rpc CheckAndUpdateStock(CheckAndUpdateStockRequest) returns (CheckAndUpdateStockResponse);
+  rpc CheckProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
+  rpc RollbackProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
+  rpc DecrStock(DecrStockRequest) returns(DecrStockResponse);
+  rpc DecrStockRevert(DecrStockRequest) returns(DecrStockResponse);
+  rpc GetBanner(BannerRequest) returns (BannerResponse);
+}
+
+message Image{
+  int64 id = 1;
+  string url = 2;
+}
+
+message ProductItem {
+  int64 id = 1;
+  string name = 2;
+  repeated Image images = 3;
+  double price = 4;
+  int64 stock = 5;
+  string category = 6;
+  int64 status = 7;
+  string description = 8;
+  int64 created_at = 9;
+  int64 updated_at = 10;
+}
+
+
+message ProductItemRequest {
+  int64 product_id = 1;
+}
+
+message ProductsRequest {
+  repeated int64 product_ids = 1;
+}
+
+message ProductsResponse {
+  map<int64, ProductItem> products = 1;
+}
+
+message ProductsByCategoryRequest {
+  int32 category_id = 1;
+  int64 cursor = 2;
+  int32 ps = 3;
+  int64 product_id = 4;
+}
+
+message ProductsByCategoryResponse {
+  bool is_end = 1;
+  int64 timestamp = 2;
+  int64 product_id = 3;
+  repeated ProductItem products = 4;
+}
+
+
+message UpdateProductStockRequest {
+  int64 product_id = 1;
+  int64 num = 2;
+}
+
+message UpdateProductStockResponse {
+}
+
+message CheckAndUpdateStockRequest {
+  int64 product_id = 1;
+  int64 num = 2;
+}
+
+message CheckAndUpdateStockResponse {
+}
+
+message DecrStockRequest {
+  int64 id = 1;
+  int64 num = 2;
+}
+
+message DecrStockResponse {
+}
+
+
+message Banner{
+  int64 id = 1;
+  string name = 2;
+  Image images = 3;
+  string linkUrl = 4;
+  string description = 5;
+}
+
+message BannerRequest {
+
+}
+
+message BannerResponse {
+  repeated Banner banners = 1;
+}
+

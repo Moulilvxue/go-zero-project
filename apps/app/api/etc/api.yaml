@@ -1,0 +1,26 @@
+Name: api
+Host: 0.0.0.0
+Port: 8888
+Mode: "dev"
+Log:
+  Level: "debug"
+  Mode: "file"
+  Encoding: "json"
+  Path: "../logs/api.log"
+
+
+JwtAuth:
+  AccessSecret: "wwddfdsafgrgcvfhrgra"
+  AccessExpire: 86400 # 1 day in seconds
+
+# 通用配置，继承关系使用
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  User: root
+  Pass: '111'
+
+ProductRpc:
+  Etcd:
+    Hosts:
+    Key: product.rpc

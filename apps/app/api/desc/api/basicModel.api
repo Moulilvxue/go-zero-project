@@ -1,0 +1,105 @@
+syntax = "v1"
+
+info(
+    title: "电商应用基础数据模型"
+    description: "包含商品、用户、订单等基础数据模型定义"
+    version: "v1.0.0"
+)
+
+type(
+    // 图片信息
+    Image {
+        ID     int64  `json:"id"`      // 图片ID
+        URL   string `json:"url"`     // 图片地址
+        // Width  int64  `json:"width"`   // 图片宽度
+        // Height int64  `json:"height"`  // 图片高度
+    }
+
+    // 轮播图信息
+    Banner{
+        ID         int64  `json:"id"`
+        Name       string `json:"name"`  // Banner名称
+        BannerImage      Image  `json:"image"` // Banner图片
+        LinkURL    string `json:"link_url"` // 点击跳转地址
+        Description string `json:"description"` // Banner描述
+    }
+
+    // 商品信息
+    Product{
+        ID       int64   `json:"id"`
+        Name     string  `json:"name"`  // 商品名称
+        Images   []Image `json:"images"` // 商品图片
+        Price    float64 `json:"price"` // 商品价格
+        Stock    int64   `json:"stock"` // 商品库存
+        Category string  `json:"category"` // 商品分类
+        Status   int64   `json:"status"` // 商品状态，如：1-正常、0-下架
+        Description string `json:"description"` // 商品描述
+        CreatedAt int64   `json:"created_at"` // 创建时间
+        UpdatedAt int64   `json:"updated_at"` // 更新时间
+    }
+
+    // 商品评价
+    Comment{
+        ID        int64  `json:"id"`
+        ProductID int64  `json:"product_id"` // 商品ID
+        UserID    int64  `json:"user_id"`    // 用户ID
+        Rating    int64  `json:"rating"`     // 评分，1-5
+        Content   string `json:"content"`    // 评论内容
+        CreatedAt int64  `json:"created_at"` // 创建时间
+        CommentImages []Image `json:"comment_images"` // 评论图片
+    }
+
+
+    // 用户
+    User{
+        ID       int64  `json:"id"`
+        Username string `json:"username"` // 用户名
+        Nickname string `json:"nickname"` // 昵称
+        Avatar   Image  `json:"avatar"`   // 用户头像
+        Phone    string `json:"phone"`    // 手机号
+        Email    string `json:"email"`    // 邮箱
+        Password string `json:"password"` // 密码（加密存储）
+        CreatedAt int64 `json:"created_at"` // 创建时间
+        UpdatedAt int64 `json:"updated_at"` // 更新时间
+    }
+
+    // 订单
+    Order{
+        ID        int64   `json:"id"`
+        UserID    int64   `json:"user_id"`    // 用户ID
+        ProductID int64   `json:"product_id"` // 商品ID
+        AddressID int64   `json:"address_id"` // 收货地址ID
+        Quantity  int64   `json:"quantity"`   // 购买数量
+        Payment   float64 `json:"payment"`    // 付款金额
+        PostCost  float64 `json:"post_cost"`  // 邮费
+        TotalPrice float64 `json:"total_price"` // 总价
+        Status    int64   `json:"status"`     // 订单状态，如：1-已支付、0-未支付
+        CreatedAt int64   `json:"created_at"` // 创建时间
+        UpdatedAt int64   `json:"updated_at"` // 更新时间
+    }
+
+
+    // 收货地址
+    Address{
+        ID         int64  `json:"id"`
+        UserID     int64  `json:"user_id"`      // 用户ID
+        Recipient  string `json:"recipient"`    // 收件人姓名
+        Phone      string `json:"phone"`        // 收件人电话
+        Province   string `json:"province"`     // 省份
+        City       string `json:"city"`         // 城市
+        District   string `json:"district"`     // 区/县
+        Detail     string `json:"detail"`       // 详细地址
+        IsDefault  bool   `json:"is_default"`   // 是否默认地址
+        CreatedAt  int64  `json:"created_at"`   // 创建时间
+        UpdatedAt  int64  `json:"updated_at"`   // 更新时间
+    }
+
+    // 购物车商品项
+    CartItem{
+        ID        int64          `json:"id"`           // 购物车项ID
+        Product   Product      `json:"product"`        // 商品信息
+        Quantity  int64          `json:"quantity"`     // 商品数量
+        AddedAt   int64          `json:"added_at"`     // 添加时间
+        UpdatedAt int64          `json:"updated_at"`   // 更新时间
+    }
+)

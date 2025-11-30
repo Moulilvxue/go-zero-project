@@ -1,0 +1,73 @@
+syntax = "v1"
+
+import "basicModel.api"
+
+info(
+    title: "电商应用首页API相关数据模型"
+    description: "包含首页Banner、推荐商品、分类商品列表、商品详情、商品评价等数据模型定义"
+    version: "v1.0.0"
+)
+
+
+type (
+    
+    // ------------首页轮播图------------
+    HomeBannerResp{
+        Banners []*Banner `json:"banners"`
+    }
+
+    // ------------首页抢购------------
+    FlashSaleResp{
+        StartTime int64      `json:"start_time"` // 抢购开始时间
+        Products []*Product `json:"products"` // 商品列表
+    }
+
+    // ------------首页推荐商品------------
+    RecommendProductsReq{
+        Cursor int64 `json:"cursor"` // 分页游标
+        Limit  int64 `json:"limit"`  // 每页数量
+    }
+
+    RecommendProductsResp{
+        Products []*Product `json:"products"` // 推荐商品列表
+        IsEnd    bool      `json:"is_end"`   // 是否最后一页
+        LastVal  int64     `json:"last_val"` // 数据创建时间(作为下标，实际对应商品的CreatedAt字段)
+    }
+
+    // ------------分类商品列表------------
+    CategoryProductsReq{
+        Category string `json:"category"` // 商品分类
+        Cursor   int64  `json:"cursor"`   // 分页游标
+        Limit    int64  `json:"limit"`    // 每页数量
+        SortBy   string `json:"sort_by"`  // 排序字段，如：price、created_at
+    }
+
+    CategoryProductsResp{
+        Products []*Product `json:"products"` // 分类商品列表
+        IsEnd    bool      `json:"is_end"`   // 是否最后一页
+        LastVal  int64     `json:"last_val"` // 数据创建时间(作为下标，实际对应商品的CreatedAt字段)
+    }
+
+    // --------------商品详情-------------
+    ProductDetailReq{
+        ProductID int64 `json:"product_id"` // 商品ID
+    }
+
+    ProductDetailResp{
+        Product *Product `json:"product"` // 商品详情
+    }
+
+    // ---------------商品评价-------------
+    CommentListReq{
+        ProductID int64 `json:"product_id"` // 商品ID
+        Cursor    int64 `json:"cursor"`     // 分页游标
+        Limit     int64 `json:"limit"`      // 每页数量
+    }
+
+    CommentListResp{
+        Comments []*Comment `json:"comments"` // 评论详情
+        IsEnd    bool      `json:"is_end"`   // 是否最后一页
+        LastVal  int64     `json:"last_val"` // 数据创建时间(作为下标，实际对应评论的CreatedAt字段)
+    }
+
+)

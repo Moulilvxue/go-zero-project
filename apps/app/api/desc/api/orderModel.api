@@ -1,0 +1,48 @@
+syntax = "v1"
+
+import "basicModel.api"
+
+info(
+    title: "电商应用订单API相关数据模型"
+    description: "包含订单信息数据模型定义"
+    version: "v1.0.0"
+)
+
+
+type (
+    // ------------创建订单------------
+    CreateOrderReq{
+        UserID      int64         `json:"user_id"`       // 用户ID
+        ProductID   int64         `json:"product_id"`    // 商品ID
+        Quantity    int64         `json:"quantity"`      // 购买数量
+        AddressID   int64         `json:"address_id"`    // 收货地址ID
+        PaymentMethod string      `json:"payment_method"` // 支付方式
+    }
+
+    CreateOrderResp{
+        OrderID   string `json:"order_id"`   // 创建的订单ID
+    }
+
+    // ------------获取订单详情------------
+    OrderDetailReq{
+        OrderID string `json:"order_id"` // 订单ID
+    }
+
+    OrderDetailResp{
+        OrderInfo Order `json:"order_info"` // 订单详情
+    }
+
+    // ------------获取订单列表------------
+    UserOrderListReq{
+        UserID int64 `json:"user_id"` // 用户ID
+        Cursor   int64 `json:"cursor"`    // 游标
+        Limit   int64 `json:"limit"`    // 每页数量
+    }
+
+    UserOrderListResp{
+        Orders      []Order `json:"orders"`       // 订单列表
+        IsEnd       bool    `json:"is_end"`      // 是否最后一页
+        LastVal   int64   `json:"last_val"`    // 数据创建时间(作为下标，实际对应订单的CreatedAt字段)
+    }
+
+)

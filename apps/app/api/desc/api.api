@@ -1,0 +1,135 @@
+syntax = "v1"
+
+import (
+	"api/homeModel.api"
+	"api/cartModel.api"
+	"api/userModel.api"
+	"api/orderModel.api"
+	"api/payModel.api"
+)
+
+// 首页相关API
+@server (
+	prefix: /v1/home
+	group:  home
+)
+service api {
+	@doc "首页Banner"
+	@handler HomeBannerHandler
+	get /banner returns (HomeBannerResp)
+
+	@doc "首页抢购"
+	@handler HomeFlashSaleHandler
+	get /flashsale returns (FlashSaleResp)
+
+	@doc "首页推荐商品"
+	@handler HomeRecommendProductsHandler
+	get /recommend (RecommendProductsReq) returns (RecommendProductsResp)
+
+	@doc "分类商品列表"
+	@handler HomeCategoryProductsHandler
+	get /category/products (CategoryProductsReq) returns (CategoryProductsResp)
+
+	@doc "商品详情"
+	@handler HomeProductDetailHandler
+	get /product/detail (ProductDetailReq) returns (ProductDetailResp)
+
+	@doc "商品评价"
+	@handler HomeProductCommentsHandler
+	get /product/comments (CommentListReq) returns (CommentListResp)
+}
+
+// 购物车相关API
+@server (
+	prefix: /v1/cart
+	jwt:    JwtAuth
+	group:  cart
+)
+service api {
+	@doc "添加商品到购物车"
+	@handler AddToCartHandler
+	post /add (AddToCartReq) returns (AddToCartResp)
+
+	@doc "获取购物车商品列表"
+	@handler GetCartListHandler
+	get /list returns (CartListResp)
+
+	@doc "更新购物车商品数量"
+	@handler UpdateCartHandler
+	post /update (UpdateCartReq) returns (UpdateCartResp)
+
+	@doc "删除购物车商品"
+	@handler DeleteCartHandler
+	post /delete (DeleteCartReq) returns (DeleteCartResp)
+}
+
+// User相关API
+@server (
+	prefix: /v1/user
+	group:  user
+)
+service api {
+	@doc "用户注册"
+	@handler UserRegisterHandler
+	post /register (UserRegisterReq) returns (UserRegisterResp)
+
+	@doc "用户登录"
+	@handler UserLoginHandler
+	post /login (UserLoginReq) returns (UserLoginResp)
+}
+
+@server (
+	prefix: /v1/user
+	group:  user
+	jwt:    JwtAuth
+)
+service api {
+	@doc "获取用户信息"
+	@handler UserInfoHandler
+	get /info returns (UserInfoResp)
+
+	@doc "更新用户信息"
+	@handler UserUpdateHandler
+	post /update (UserUpdateReq) returns (UserUpdateResp)
+
+	@doc "用户注销"
+	@handler UserLogoutHandler
+	post /logout returns (UserLogoutResp)
+}
+
+// 订单相关API
+@server (
+	prefix: /v1/order
+	group:  order
+	jwt:    JwtAuth
+)
+service api {
+	@doc "创建订单"
+	@handler CreateOrderHandler
+	post /create (CreateOrderReq) returns (CreateOrderResp)
+
+	@doc "获取订单详情"
+	@handler OrderDetailHandler
+	get /detail (OrderDetailReq) returns (OrderDetailResp)
+
+	@doc "获取用户订单列表"
+	@handler UserOrderListHandler
+	get /list (UserOrderListReq) returns (UserOrderListResp)
+}
+
+// 支付相关API
+@server (
+	prefix: /v1/payment
+	group:  payment
+	jwt:    JwtAuth
+)
+service api {
+	@doc "发起支付"
+	@handler InitiatePaymentHandler
+	post /pay (InitiatePaymentReq) returns (InitiatePaymentResp)
+
+	@doc "支付回调通知"
+	@handler PaymentCallbackHandler
+	post /callback (PaymentCallbackReq) returns (PaymentCallbackResp)
+}
+
